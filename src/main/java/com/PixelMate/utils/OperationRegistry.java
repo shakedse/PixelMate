@@ -37,8 +37,6 @@ public class OperationRegistry {
                 ((Number) parameters.get("width")).intValue(),
                 ((Number) parameters.get("height")).intValue()));
 
-        filtersMap.put("sobel", (image, parameters) -> SobelFilter.apply(image));
-
         filtersMap.put("sharpen", (image, parameters) -> SharpenFilter.apply(image));
 
         // Optional: remove or implement UnsharpMaskFilter if needed
