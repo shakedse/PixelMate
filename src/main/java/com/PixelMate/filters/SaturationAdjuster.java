@@ -1,4 +1,4 @@
-package com.lightricks.filters;
+package com.pixelmate.filters;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

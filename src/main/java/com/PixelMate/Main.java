@@ -1,9 +1,9 @@
-package com.lightricks;
+package com.pixelmate;
 
-import com.lightricks.utils.Config;
-import com.lightricks.utils.ConfigLoader;
-import com.lightricks.utils.ImageIOUtil;
-import com.lightricks.utils.OperationRegistry;
+import com.pixelmate.utils.Config;
+import com.pixelmate.utils.ConfigLoader;
+import com.pixelmate.utils.ImageIOUtil;
+import com.pixelmate.utils.OperationRegistry;
 
 import java.awt.image.BufferedImage;
 import java.util.Map;

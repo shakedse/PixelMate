@@ -1,6 +1,6 @@
-package com.lightricks.filters;
+package com.pixelmate.filters;
 
-import com.lightricks.utils.Convolution;
+import com.pixelmate.utils.Convolution;
 import java.awt.image.BufferedImage;
 
 public class SharpenFilter {

@@ -1,18 +1,32 @@
-package com.lightricks.filters;
-import com.lightricks.utils.Convolution;
-import java.awt.image.BufferedImage;//A class holding a 2D image in memory
+package com.pixelmate.filters;
 
-public class BoxBlur //A class that applies a box blur filter to an image
-{
-    public static BufferedImage apply(BufferedImage originImage, int width, int height) 
-    {
+import com.pixelmate.utils.Convolution; // Import the convolution utility
+import java.awt.image.BufferedImage; // Import BufferedImage for handling images
+
+public class BoxBlur {
+
+    /**
+     * Applies a box blur filter to the input image.
+     * 
+     * @param image  The input image to be processed.
+     * @param width  The width of the blur kernel (e.g., 3 for a 3x3 kernel).
+     * @param height The height of the blur kernel (e.g., 3 for a 3x3 kernel).
+     * @return A new BufferedImage with the box blur applied.
+     */
+    public static BufferedImage apply(BufferedImage image, int width, int height) {
+        // Create a 2D kernel (matrix) of the specified size
         double[][] kernel = new double[height][width];
-        double v = 1.0 / (width * height);//Normalization factor for the kernel
+
+        // Calculate the value for each cell: 1 / (width * height)
+        double value = 1.0 / (width * height);
+
+        // Fill the kernel with the uniform value
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                kernel[y][x] = v;//Make the kernel values equal to the normalization factor
+                kernel[y][x] = value; // Each pixel in the kernel has equal weight
             }
         }
-        return Convolution.convolve(originImage, kernel);//Switching the values of the kernel with the values of the image
+        // Perform convolution on the image using the generated kernel
+        return Convolution.convolve(image, kernel);
     }
 }

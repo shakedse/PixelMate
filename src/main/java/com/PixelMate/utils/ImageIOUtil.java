@@ -1,4 +1,4 @@
-package com.lightricks.utils;
+package com.pixelmate.utils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

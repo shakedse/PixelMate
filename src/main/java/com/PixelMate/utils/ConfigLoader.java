@@ -1,4 +1,4 @@
-package com.lightricks.utils;
+package com.pixelmate.utils;
 
 import org.json.JSONObject;
 import java.nio.file.Files;
