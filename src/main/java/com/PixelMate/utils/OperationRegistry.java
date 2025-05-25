@@ -4,54 +4,44 @@ import com.pixelmate.filters.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 public class OperationRegistry {
 
-    // Map that links operation names (like "brightness") to their filter functions
-    private static final Map<String, BiFunction<BufferedImage, Map<String, Object>, BufferedImage>> filtersMap = new HashMap<>();
+    // Map that links filter names (like "brightness") to their filter implementations
+    private static final Map<String, Filter> filtersMap = new HashMap<>();
 
-    // This code runs once when the class loads and registers all filters
+    // Static block to register all filters when the class is loaded
     static {
         registerAllFilters();
     }
 
-    // This method connects each operation name to the actual function that handles
-    // it
+    /**
+     * Registers each filter by linking its name to a Filter implementation.
+     * This approach uses objects instead of lambda functions for simplicity and flexibility.
+     */
     public static void registerAllFilters() {
-        filtersMap.put("brightness", (image, parameters) -> BrightnessAdjuster.adjust(
-                image,
-                ((Number) parameters.get("value")).doubleValue()));
-
-        filtersMap.put("contrast", (image, parameters) -> ContrastAdjuster.adjust(
-                image,
-                ((Number) parameters.get("value")).doubleValue()));
-
-        filtersMap.put("saturation", (image, parameters) -> SaturationAdjuster.adjust(
-                image,
-                ((Number) parameters.get("value")).doubleValue()));
-
-        // Corrected BoxBlur to call the proper apply method
-        filtersMap.put("box_blur", (image, parameters) -> BoxBlur.apply(
-                image,
-                ((Number) parameters.get("width")).intValue(),
-                ((Number) parameters.get("height")).intValue()));
-
-        filtersMap.put("sharpen", (image, parameters) -> SharpenFilter.apply(image));
-
-        // Optional: remove or implement UnsharpMaskFilter if needed
-        // filtersMap.put("unsharp_mask", (image, parameters) ->
-        // UnsharpMaskFilter.apply(image));
+        filtersMap.put("brightness", new BrightnessAdjuster());
+        filtersMap.put("contrast", new ContrastAdjuster());
+        filtersMap.put("saturation", new SaturationAdjuster());
+        filtersMap.put("box_blur", new BoxBlur());
+        filtersMap.put("sharpen", new SharpenFilter());
     }
 
-    // This method finds the filter by name and applies it with the given parameters
+    /**
+     * Applies the specified filter to the image with the given parameters.
+     * @param filterName The name of the filter (e.g., "brightness", "contrast").
+     * @param image The original BufferedImage to process.
+     * @param parameters A map of parameters needed by the filter.
+     * @return The processed BufferedImage.
+     * @throws IllegalArgumentException if the filter name does not exist.
+     */
     public static BufferedImage apply(String filterName, BufferedImage image, Map<String, Object> parameters) {
-        BiFunction<BufferedImage, Map<String, Object>, BufferedImage> filterFunction = filtersMap.get(filterName);
+        Filter filter = filtersMap.get(filterName);
 
-        if (filterFunction == null) {
+        if (filter == null) {
             throw new IllegalArgumentException("No such filter: " + filterName);
         }
 
-        return filterFunction.apply(image, parameters);
+        return filter.apply(image, parameters);
     }
 }

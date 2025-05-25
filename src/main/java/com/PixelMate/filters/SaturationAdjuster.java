@@ -2,18 +2,12 @@ package com.pixelmate.filters;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
-public class SaturationAdjuster {
+public class SaturationAdjuster implements Filter {
 
-    /**
-     * Adjusts the saturation of the given image by a specified factor.
-     * 
-     * @param image  The original BufferedImage to adjust.
-     * @param factor The saturation adjustment factor (1 = no change, >1 = more
-     *               saturated, <1 = desaturated).
-     * @return A new BufferedImage with adjusted saturation.
-     */
-    public static BufferedImage adjust(BufferedImage image, double factor) {
+    // Adjusts the saturation of the given image by a specified factor.
+    public static BufferedImage apply(BufferedImage image, double factor) {
         int width = image.getWidth();
         int height = image.getHeight();
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -38,19 +32,22 @@ public class SaturationAdjuster {
 
                 // Create new color with adjusted saturation and original alpha
                 Color adjusted = new Color(newR, newG, newB, a);
-                result.setRGB(x, y, adjusted.getRGB()); // Set adjusted pixel
+                result.setRGB(x, y, adjusted.getRGB());
             }
         }
 
         return result;
     }
 
-    /**
-     * Ensures color values stay within [0, 255].
-     * 
-     * @param value The input color value.
-     * @return The clamped value.
-     */
+    // Implements the Filter interface apply method.
+    // Extracts 'value' from parameters and applies the saturation adjustment.
+    @Override
+    public BufferedImage apply(BufferedImage image, Map<String, Object> parameters) {
+        double factor = ((Number) parameters.get("value")).doubleValue();
+        return apply(image, factor);
+    }
+
+    // Ensures color values stay within the valid range [0, 255].
     private static int clamp(int value) {
         return Math.max(0, Math.min(255, value));
     }

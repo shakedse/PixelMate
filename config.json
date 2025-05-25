@@ -1,11 +1,11 @@
 {
   "input": "input.png",
   "output": "output.png",
-  "display": false,
+  "display": true,
   "operations": [
-    { "type": "brightness", "value": 1.1 },
+    { "type": "brightness", "value": 1.0 },
     { "type": "contrast", "value": 1.2 },
     { "type": "saturation", "value": 1.1 },
-    { "type": "box_blur", "width": 3, "height": 3 }
+    { "type": "box_blur", "width": 6, "height": 6 }
   ]
 }

@@ -2,9 +2,9 @@ com\pixelmate\filters\SharpenFilter.class
 com\pixelmate\utils\Convolution.class
 com\pixelmate\filters\BoxBlur.class
 com\pixelmate\filters\SaturationAdjuster.class
-com\pixelmate\filters\SobelFilter.class
 com\pixelmate\utils\Config.class
 com\pixelmate\filters\ContrastAdjuster.class
+com\pixelmate\filters\Filter.class
 com\pixelmate\utils\ImageIOUtil.class
 com\pixelmate\Main.class
 com\pixelmate\utils\ConfigLoader.class

@@ -13,8 +13,7 @@ public class ImageIOUtil {
 
     // Save an image to a file (PNG format)
     public static void save(BufferedImage image, String path) throws Exception {
-        if (image == null || path == null) 
-        {
+        if (image == null || path == null) {
             throw new IllegalArgumentException("Image or path is null");
         }
 

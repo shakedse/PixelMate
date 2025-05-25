@@ -1,32 +1,35 @@
 package com.pixelmate.filters;
 
-import com.pixelmate.utils.Convolution; // Import the convolution utility
-import java.awt.image.BufferedImage; // Import BufferedImage for handling images
+import com.pixelmate.utils.Convolution;
+import java.awt.image.BufferedImage;
+import java.util.Map;
 
-public class BoxBlur {
+public class BoxBlur implements Filter {
 
-    /**
-     * Applies a box blur filter to the input image.
-     * 
-     * @param image  The input image to be processed.
-     * @param width  The width of the blur kernel (e.g., 3 for a 3x3 kernel).
-     * @param height The height of the blur kernel (e.g., 3 for a 3x3 kernel).
-     * @return A new BufferedImage with the box blur applied.
-     */
+    // Applies a box blur filter to the input image with specified kernel size.
+    // Generates a kernel (matrix) where all values are equal and sums to 1.
     public static BufferedImage apply(BufferedImage image, int width, int height) {
-        // Create a 2D kernel (matrix) of the specified size
         double[][] kernel = new double[height][width];
+        double value = 1.0 / (width * height); // Each cell has equal weight
 
-        // Calculate the value for each cell: 1 / (width * height)
-        double value = 1.0 / (width * height);
-
-        // Fill the kernel with the uniform value
+        // Fill the kernel with the calculated value
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                kernel[y][x] = value; // Each pixel in the kernel has equal weight
+                kernel[y][x] = value;
             }
         }
-        // Perform convolution on the image using the generated kernel
+
+        // Apply convolution using the generated kernel
         return Convolution.convolve(image, kernel);
+    }
+
+    // Implements the Filter interface apply method.
+    // Extracts 'width' and 'height' from parameters, then calls the static apply
+    // method.
+    @Override
+    public BufferedImage apply(BufferedImage image, Map<String, Object> parameters) {
+        int width = ((Number) parameters.get("width")).intValue();
+        int height = ((Number) parameters.get("height")).intValue();
+        return apply(image, width, height);
     }
 }
